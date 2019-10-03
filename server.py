@@ -5,19 +5,24 @@ from flask_api import status
 from flask import Flask, request, render_template
 from flask_cors import CORS
 import json
-from playsound import playsound
+import pygame
 import os
 import re
 
 app = Flask(__name__, static_folder="build/static", template_folder="build")
 CORS(app)
+pygame.mixer.init()
 
 
 @app.route("/play", methods=['POST'])
 def playSoundRequest():
     data = request.get_data()
+    data = str(data, 'utf-8')
     jsonData = json.loads(data)
-    playsound("./dat/"+jsonData["playId"])
+    cwd = os.getcwd()
+    path = cwd + "/dat/"+jsonData["playId"]
+    pygame.mixer.music.load(path)
+    pygame.mixer.music.play()
     return "", status.HTTP_202_ACCEPTED
 
 def getAllButtonsObject():
