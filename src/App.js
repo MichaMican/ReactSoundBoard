@@ -38,7 +38,10 @@ class App extends React.Component {
     getButtonElements = () => {
         return new Promise((resolve) => {
 
-            fetch('http://localhost/getButtons')
+            var getUrl = window.location;
+            var baseUrl = getUrl.protocol + "//" + getUrl.host;
+
+            fetch(baseUrl + '/getButtons')
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
@@ -58,7 +61,10 @@ class App extends React.Component {
             console.log(xhr.responseText)
         })
 
-        xhr.open('POST', 'http://localhost/play')
+        var getUrl = window.location;
+        var baseUrl = getUrl.protocol + "//" + getUrl.host;
+
+        xhr.open('POST', baseUrl + '/play')
         xhr.send(JSON.stringify({ playId: id }))
 
     }
