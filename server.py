@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_api import status
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
 from flask_cors import CORS
 import json
 import pygame
@@ -50,6 +50,9 @@ def returnAllButtons():
 def index():
     return render_template("index.html")
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join('./build', 'static'),'favicon.ico')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
