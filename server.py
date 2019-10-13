@@ -40,6 +40,11 @@ def getAllButtonsObject():
             buttons.append(objToAppend)
     return {"buttons": buttons}
 
+@app.route("/stop", methods=['GET'])
+def stopMusic():
+    pygame.mixer.music.stop()
+    return "", status.HTTP_200_OK
+
 
 @app.route("/getButtons", methods=['GET'])
 def returnAllButtons():
