@@ -16,7 +16,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttons: []
+            buttons: [],
+            authenticated: false
         }
 
         this.getButtonElements().then((result) => {
@@ -98,30 +99,50 @@ class App extends React.Component {
         })
     }
 
+    checkPassword(input){
+        if(input === "DiesesPasswortWerdetIhrAbsolutNieBruteForcenWeilEsVielZuVieleStellenHat" || input === "ch3lul"){
+            this.setState({
+                authenticated: true
+            })
+        }
+    }
+
     render() {
         return (
             <div>
-                <div>
-                    <Button onClick={this.refresh} style={{ width: 50, height: 50, marginLeft: 10, marginTop: 10 }}>
-                        <Image
-                            src={require('./assets/img/refresh.png')}
-                            style={{ height: '100%', width: '150%', marginLeft: -5 }}
+                {this.state.authenticated ? (
+                    <div>
+                        <div>
+                            <Button onClick={this.refresh} style={{ width: 50, height: 50, marginLeft: 10, marginTop: 10 }}>
+                                <Image
+                                    src={require('./assets/img/refresh.png')}
+                                    style={{ height: '100%', width: '150%', marginLeft: -5 }}
+                                />
+                            </Button>
+                            <Button variant="danger" onClick={this.stop} style={{ width: 48, height: 48, marginLeft: 10, marginTop: 10 }}>
+                                <Image
+                                    src={require('./assets/img/stop_sign.png')}
+                                    style={{ height: '100%', width: '150%', marginLeft: -5 }}
+                                />
+                            </Button>
+                            <Button variant="link" onClick={this.random} style={{ width: 50, height: 50, marginLeft: 10, marginTop: 10 }}>
+                                <Image
+                                    src={require('./assets/img/rand.png')}
+                                    style={{ height: '100%', width: '150%', marginLeft: -5 }}
+                                />
+                            </Button>
+                        </div>
+                        {this.getDOM()}
+                    </div>)
+                    :
+                    (
+                        <input
+                            placeholder="Password"
+                            type="password"
+                            onChange={(p) => this.checkPassword(p.target.value)}
                         />
-                    </Button>
-                    <Button variant="danger" onClick={this.stop} style={{ width: 48, height: 48, marginLeft: 10, marginTop: 10 }}>
-                        <Image
-                            src={require('./assets/img/stop_sign.png')}
-                            style={{ height: '100%', width: '150%', marginLeft: -5 }}
-                        />
-                    </Button>
-                    <Button variant="link" onClick={this.random} style={{ width: 50, height: 50, marginLeft: 10, marginTop: 10 }}>
-                        <Image
-                            src={require('./assets/img/rand.png')}
-                            style={{ height: '100%', width: '150%', marginLeft: -5 }}
-                        />
-                    </Button>
-                </div>
-                {this.getDOM()}
+                    )
+                }
             </div>
         );
     }
