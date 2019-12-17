@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 
+import pwd from './password.json'
+
 import { Button, Image } from 'react-bootstrap'
 
 class ButtonElement {
@@ -100,7 +102,7 @@ class App extends React.Component {
     }
 
     checkPassword(input){
-        if(input === "DiesesPasswortWerdetIhrAbsolutNieBruteForcenWeilEsVielZuVieleStellenHat" || input === "ch3lul"){
+        if(input === pwd.pwd){
             this.setState({
                 authenticated: true
             })
