@@ -19,7 +19,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             buttons: [],
-            authenticated: false
+            authenticated: false,
+            authenticatedPhips: false,
         }
 
         this.getButtonElements().then((result) => {
@@ -101,10 +102,21 @@ class App extends React.Component {
         })
     }
 
+    getPhipsDOM = () => {
+        return this.state.buttons.map((element) => {
+            if(element.title === "Imperial March")
+            return <Button onClick={() => this.sendPlaySoundRequest(element.id)} className="button">{element.title}</Button>
+        })
+    }
+
     checkPassword(input){
         if(input === pwd.pwd){
             this.setState({
                 authenticated: true
+            })
+        }else if(input === pwd.phipsPwd){
+            this.setState({
+                authenticatedPhips: true
             })
         }
     }
@@ -112,7 +124,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                {this.state.authenticated ? (
+                {(this.state.authenticated || this.state.authenticatedPhips) ? (
                     <div>
                         <div>
                             <Button onClick={this.refresh} style={{ width: 50, height: 50, marginLeft: 10, marginTop: 10 }}>
@@ -134,7 +146,7 @@ class App extends React.Component {
                                 />
                             </Button>
                         </div>
-                        {this.getDOM()}
+                        {this.state.authenticatedPhips ? this.getPhipsDOM() : this.getDOM()}
                     </div>)
                     :
                     (
